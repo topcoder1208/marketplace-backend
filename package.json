@@ -4,6 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
+    "build": "npx ts-node ./src/index.ts",
     "start": "node dist/index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
