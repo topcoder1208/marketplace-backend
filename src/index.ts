@@ -45,12 +45,11 @@ const CreateMarketplace = async () => {
     let marketplace = new Marketplace(provider);
     await marketplace.createMarketplace(admin, marketplaceMint.publicKey, 5, adminTokenAccount)
 
-    // let creator = new PublicKey("51rWVP1Rb5fbys6wmoyuDir6yyumfCQSFcaCDef46baW");
-    let creator = new PublicKey("G4hS53oJHZRyt132iYAREZM2GMN2W4KrMKXB2zWWpW5u");
-    let symbol = new PublicKey("G4hS53oJHZRyt132iYAREZM2GMN2W4KrMKXB2zWWpW5u");
+    let creator = new PublicKey("5VYKujK4C59nB8mD9ZjidF1zpQdVWPC7SietFos6yJFj");  // candy machine id
+    let symbol = new PublicKey("5VYKujK4C59nB8mD9ZjidF1zpQdVWPC7SietFos6yJFj");
 
     await marketplace.createCollection(admin, creator, symbol, true)
-    
+
     console.log(marketplace.marketplacePDA.toBase58(), "marketplacePDA");
 
     let collectionPDA = await getCollectionPDA(marketplace.marketplacePDA, symbol);
@@ -75,10 +74,10 @@ const UpdateCollection = async () => {
     const marketplacePDA = new PublicKey("HYReGTDTx5vshG1NMxHnNoDrcK8gG6XhFNDMF6A16z84");
     let marketplace = new Marketplace(provider, marketplacePDA);
 
-    let symbol = new PublicKey("51rWVP1Rb5fbys6wmoyuDir6yyumfCQSFcaCDef46baW");
+    let symbol = new PublicKey("5VYKujK4C59nB8mD9ZjidF1zpQdVWPC7SietFos6yJFj");
     let collectionPDA = await getCollectionPDA(marketplace.marketplacePDA, symbol);
-    
-    let creator = new PublicKey("51rWVP1Rb5fbys6wmoyuDir6yyumfCQSFcaCDef46baW");
+
+    let creator = new PublicKey("5VYKujK4C59nB8mD9ZjidF1zpQdVWPC7SietFos6yJFj");
 
     await marketplace.updateCollection(admin, collectionPDA, null, null, creator, true)
 
