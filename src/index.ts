@@ -111,10 +111,10 @@ const createCollection = async () => {
     let marketplace = new Marketplace(provider);
     await marketplace.createCollection(admin, creator, symbol, true)
 
-    console.log(marketplace.marketplacePDA.toBase58(), "marketplacePDA");
+    const marketplacePDA = new PublicKey('F4wMQYWFz2RHNZJ1m6pMKuKmdAzaW2oDJqEQmpeSQA2b');
 
-    let collectionPDA = await getCollectionPDA(marketplace.marketplacePDA, symbol);
-    let collection = new Collection(provider, marketplace.marketplacePDA, collectionPDA);
+    let collectionPDA = await getCollectionPDA(marketplacePDA, symbol);
+    let collection = new Collection(provider, marketplacePDA, collectionPDA);
     let result = await collection.getCollection();
 
     console.log(result.symbol.toBase58(), "collection");
