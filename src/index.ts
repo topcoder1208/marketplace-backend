@@ -71,7 +71,7 @@ const UpdateCollection = async () => {
         preflightCommitment: 'recent',
     });
 
-    const marketplacePDA = new PublicKey("HYReGTDTx5vshG1NMxHnNoDrcK8gG6XhFNDMF6A16z84");
+    const marketplacePDA = new PublicKey("F4wMQYWFz2RHNZJ1m6pMKuKmdAzaW2oDJqEQmpeSQA2b");
     let marketplace = new Marketplace(provider, marketplacePDA);
 
     let symbol = new PublicKey("5VYKujK4C59nB8mD9ZjidF1zpQdVWPC7SietFos6yJFj");
@@ -88,5 +88,38 @@ const UpdateCollection = async () => {
     console.log(result);
 }
 
-CreateMarketplace();
+const createCollection = async () => {
+    const connection = new Connection(clusterApiUrl("devnet"));
+
+    const admin = Keypair.fromSecretKey(new Uint8Array(adminWallet));
+    const anchorWallet = new Wallet(admin);
+
+    let provider = new Provider(connection, anchorWallet, {
+        preflightCommitment: 'recent',
+    });
+
+    const marketplaceMint = new splToken.Token(
+        provider.connection,
+        mintPubkey,
+        splToken.TOKEN_PROGRAM_ID,
+        admin
+    );
+
+    let symbol = new PublicKey("9KWfWmPsmGokcBsKZ9Ub8ZMLitW5sqQaeNbjiHP4qu6D"); // candy machine
+    let creator = new PublicKey("9KWfWmPsmGokcBsKZ9Ub8ZMLitW5sqQaeNbjiHP4qu6D");
+
+    let marketplace = new Marketplace(provider);
+    await marketplace.createCollection(admin, creator, symbol, true)
+
+    console.log(marketplace.marketplacePDA.toBase58(), "marketplacePDA");
+
+    let collectionPDA = await getCollectionPDA(marketplace.marketplacePDA, symbol);
+    let collection = new Collection(provider, marketplace.marketplacePDA, collectionPDA);
+    let result = await collection.getCollection();
+
+    console.log(result.symbol.toBase58(), "collection");
+}
+
+// CreateMarketplace();
 // UpdateCollection();
+createCollection();
