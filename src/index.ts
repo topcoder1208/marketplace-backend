@@ -122,6 +122,6 @@ const createCollection = async () => {
     console.log(result.symbol.toBase58(), "collection");
 }
 
-// CreateMarketplace();
+CreateMarketplace();
 // UpdateCollection();
-createCollection();
+// createCollection();
